@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,18 +14,28 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class MainActivity extends AppCompatActivity implements ListaCategoriaFragment.CallbackCategoria {
 
     DetalleFragment det_fragment;
     DrawerLayout drawerLayout;
-
+    TabLayout tabLayout;
+    ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        tabLayout = findViewById(R.id.tabLayout);
+       // tabLayout.addTab(tabLayout.newTab().setText("Categorias"));
+        viewPager = findViewById(R.id.viewPager);
 
+        TabAdapter adapter = new TabAdapter(getSupportFragmentManager(),this);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setupWithViewPager(viewPager);// enlazas tab con el view pager
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle =
                 new ActionBarDrawerToggle(this,
@@ -40,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements ListaCategoriaFra
         FragmentManager fm = getSupportFragmentManager();
         ListaCategoriaFragment lcf =
                 (ListaCategoriaFragment) fm.findFragmentById(R.id.lista_categorias);
-        lcf.callbackCategoria = this;
+       // lcf.callbackCategoria = this;
         if(isTablet(this)){
             det_fragment =
                     (DetalleFragment) fm.findFragmentById(R.id.lista_detalle);

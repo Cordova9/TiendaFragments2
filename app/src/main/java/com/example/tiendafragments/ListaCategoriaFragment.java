@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ListaCategoriaFragment extends Fragment implements CategoriaHolder.CategoriaCallback {
     RecyclerView recyclerView;
-    CallbackCategoria callbackCategoria;
+    public  CallbackCategoria callbackCategoria;
 
     public ListaCategoriaFragment() {
         // Required empty public constructor
